@@ -1,3 +1,5 @@
+I wanted an AI to live inside of old telephone, so I created this.
+
 ## Setup
 1. run
 ```
@@ -12,9 +14,9 @@ cp dotenv.example.txt .env
 vim .env lib/const.py
 ```
 
-##
-
 ## Run
 ```
 python3.10 main.py
 ```
+
+And speak.
