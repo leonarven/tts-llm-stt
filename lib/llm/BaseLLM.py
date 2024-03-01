@@ -18,6 +18,7 @@ class BaseLLM(SpeechUtil):
 
     message_history = []
 
+    api_endpoint = None
 
     def __init__(self, *args, **kwargs):
         self.roles_mapping[ ROLE_ASSISTANT ] = ROLE_ASSISTANT

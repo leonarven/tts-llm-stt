@@ -22,9 +22,7 @@ class GeminiLLM(OpenAIGPT35LLM):
         project_id = kwargs.get("project_id", getenv("GOOGLE_PROJECT_ID"))
         endpoint   = f"{ location }-aiplatform.googleapis.com"
 
-        api_endpoint = f"https://{ endpoint }/v1/projects/{ project_id }/locations/{ location }/publishers/google/models/{ self.args['model'] }:generateContent"
-
-        self.args["api_endpoint"] = api_endpoint
+        self.api_endpoint = f"https://{ endpoint }/v1/projects/{ project_id }/locations/{ location }/publishers/google/models/{ self.args['model'] }:generateContent"
         
 
     def _chat_completion_messages( self, messages ) -> BaseMessage:
@@ -64,7 +62,7 @@ class GeminiLLM(OpenAIGPT35LLM):
         start_time = time()
 
         response = post(
-            self.args["api_endpoint"],
+            self.api_endpoint,
             headers = {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
