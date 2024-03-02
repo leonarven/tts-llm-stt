@@ -39,13 +39,14 @@ python3.10 main.py --debug --tts=fake
 - `-n` / `--iterations` - Count of iterations when in debug mode
 - `-o` / `--operator` - The used operator for handling the loop when in debug mode. *"SpeechOperator"* or *"SpeechCommandOperator"*
 
-### Current defaults available in Args.py
-Currently:
+Current defaults available in Args.py. Currently:
 
-default stt = `SpeechRecognition`
-default llm = `gemini-1.0-pro`
-default tts = OpenAI TTS
+#### Normal mode
+- stt = `SpeechRecognition`
+- llm = `gemini-1.0-pro`
+- tts = OpenAI TTS as `oai`
 
-default stt when in debug = `SpeechRecognition`
-default stt when in debug = `groq-mixtral-8.7b`
-default stt when in debug = `fake`
+#### Debug mode
+- stt = `SpeechRecognition`
+- llm = `groq-mixtral-8.7b`
+- tts = `gTTS`
