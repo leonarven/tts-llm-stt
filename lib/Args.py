@@ -11,6 +11,10 @@ from lib.stt.models import SPEECH_RECOGNITION as default_stt
 from lib.llm.models import GEMINI_1_0_PRO     as default_llm
 from lib.tts.models import OAI                as default_tts
 
+from lib.stt.models import SPEECH_RECOGNITION as default_debug_stt
+from lib.llm.models import GROQ_MIXTRAL_8_7B  as default_debug_llm
+from lib.tts.models import GTTS               as default_debug_tts
+
 class Args:
 
     debug = False
@@ -30,9 +34,9 @@ class Args:
 
         parser = ArgumentParser()
 
-        parser.add_argument( '-a', '--stt', default=default_stt )
-        parser.add_argument( '-b', '--llm', default=default_llm )
-        parser.add_argument( '-c', '--tts', default=default_tts )
+        parser.add_argument( '-a', '--stt', default='', type=str )
+        parser.add_argument( '-b', '--llm', default='', type=str )
+        parser.add_argument( '-c', '--tts', default='', type=str )
         parser.add_argument( '-d', '--debug', action='store_true' )
         parser.add_argument( '-n', '--iterations', type=int, default=2, help="Used when in debug mode. Number of iterations. When 0, run indefinitely.")
         parser.add_argument( '-o', '--operator', type=str, default="SpeechChamberOperator", help="Used when in debug mode. SpeechOperator or SpeechChamberOperator", choices=["SpeechOperator", "SpeechChamberOperator"])
@@ -62,7 +66,7 @@ class Args:
     def setSTT( self, stt ):
 
         if not stt:
-            raise Exception("STT model not set")
+            stt = default_debug_stt if self.debug else default_stt
 
         stt = stt.lower()
 
@@ -71,7 +75,7 @@ class Args:
     def setLLM( self, llm ):
         
         if not llm:
-            raise Exception("LLM model not set")
+            llm = default_debug_llm if self.debug else default_llm
 
         llm = llm.lower()
 
@@ -79,9 +83,9 @@ class Args:
 
 
     def setTTS( self, tts ):
-            
+
         if not tts:
-            raise Exception("TTS model not set")
+            tts = default_debug_tts if self.debug else default_tts
 
         tts = tts.lower()
 

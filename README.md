@@ -11,7 +11,6 @@ pip install -r requirements.txt
 2. configurate
 ```
 cp dotenv.example.txt .env
-vim .env lib/const.py
 ```
 
 ## Run
@@ -19,6 +18,16 @@ vim .env lib/const.py
 python3.10 main.py
 ```
 And speak.
+
+Or to run without reading microphone when testing (audio output is still enabled)
+```
+python3.10 main.py --debug
+```
+
+Or even more quick to run without microphone and output audio
+```
+python3.10 main.py --debug --tts=fake
+```
 
 ## Usage
 
@@ -29,3 +38,14 @@ And speak.
 - `-c` / `--tts` - Text to speech -model
 - `-n` / `--iterations` - Count of iterations when in debug mode
 - `-o` / `--operator` - The used operator for handling the loop when in debug mode. *"SpeechOperator"* or *"SpeechCommandOperator"*
+
+### Current defaults available in Args.py
+Currently:
+
+default stt = `SpeechRecognition`
+default llm = `gemini-1.0-pro`
+default tts = OpenAI TTS
+
+default stt when in debug = `SpeechRecognition`
+default stt when in debug = `groq-mixtral-8.7b`
+default stt when in debug = `fake`
