@@ -28,3 +28,4 @@ And speak.
 - `-b` / `--llm` - LLM-model
 - `-c` / `--tts` - Text to speech -model
 - `-n` / `--iterations` - Count of iterations when in debug mode
+- `-o` / `--operator` - The used operator for handling the loop when in debug mode. *"SpeechOperator"* or *"SpeechCommandOperator"*
