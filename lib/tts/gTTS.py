@@ -3,16 +3,12 @@ from gtts import gTTS
 from io import BytesIO
 from pydub import AudioSegment
 from lib.logger import debug
-import lib.const as const
 from lib.tts.BaseTTS import BaseTTS
 
 class GTTS( BaseTTS ):
     
     def text_to_audio( self, text, lang="fi" ):
         debug( type(self).__name__, "text_to_audio() :: Muutetaan vastaus puheeksi" )
-
-        if const.DO_FAKE_TTS:
-            return self._text_to_audio_fake( text )
 
         buf = self.text_to_audio_bytesio( text, lang )
 
@@ -42,7 +38,3 @@ class GTTS( BaseTTS ):
 
     def _text_to_tts( self, text, lang="fi" ):
         return gTTS( text, lang=lang )
-
-
-
-tts = GTTS()

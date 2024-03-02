@@ -1,9 +1,9 @@
 from time import sleep, time
 import openai
-from os import getenv
+from os import getenv, environ
+import lib.llm.models as models
 from lib.logger import debug
 from lib.llm.BaseLLM import BaseLLM, BaseMessage, ROLE_USER, ROLE_ASSISTANT, ROLE_SYSTEM
-import lib.const as const
 
 class OpenAIGPT35LLM(BaseLLM):
 
@@ -12,7 +12,7 @@ class OpenAIGPT35LLM(BaseLLM):
         super().__init__(*args, **kwargs)
 
         self.args["api_key"] = kwargs.get("api_key", getenv("OPENAI_API_KEY"))
-        self.args["model"] = kwargs.get("model", "gpt-3.5-turbo-0125")
+        self.args["model"] = kwargs.get("model", models.GPT_3_5)
 
         self.client = openai.OpenAI();
     
@@ -20,9 +20,6 @@ class OpenAIGPT35LLM(BaseLLM):
     def text_to_text_completion( self, text ):
         debug( type(self).__name__, "text_to_text_completion() :: Luodaan vastaus" )
         
-        if const.DO_FAKE_LLM:
-            return self._text_to_text_completion_fake( text )
-
         message = self._chat_completion_single_message( text );
         response = message.content;
 
@@ -75,6 +72,3 @@ class OpenAIGPT35LLM(BaseLLM):
             messages.append( { "role": message.role, "content": message.content } )
 
         return messages
-    
-
-llm = OpenAIGPT35LLM()

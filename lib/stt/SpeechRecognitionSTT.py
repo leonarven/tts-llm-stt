@@ -1,7 +1,6 @@
 import speech_recognition as sr
 from time import time
 from lib.logger import debug
-import lib.const as const 
 from lib.stt.BaseSTT import BaseSTT
 
 class SpeechRecognitionSTT( BaseSTT ):
@@ -9,18 +8,12 @@ class SpeechRecognitionSTT( BaseSTT ):
     def audio_to_text( self, filename ):
         debug( type(self).__name__, "audio_to_text()","Kuunnellaan tiedosto")
 
-        if const.DO_FAKE_SST:
-            return super()._audio_to_text_fake()
-
         with sr.AudioFile( filename ) as source:
             return self._audio_source_to_text( source )
     
     def recording_to_text( self, duration=None ):
         debug( type(self).__name__, "recording_to_text()","Kuunnellaan...")
-
-        if const.DO_FAKE_SST:
-            return super()._recording_to_text_fake()
-        
+    
         r = sr.Recognizer()
 
         with sr.Microphone() as source:
@@ -63,6 +56,3 @@ class SpeechRecognitionSTT( BaseSTT ):
         response = recognizer.recognize_google( audio_data, language=language )
         debug( type(self).__name__, "_recognize() :: Valmis! (", time() - start_time, "s)" )
         return response
-
-
-stt = SpeechRecognitionSTT()

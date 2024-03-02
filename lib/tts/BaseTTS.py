@@ -11,6 +11,6 @@ class BaseTTS(SpeechUtil):
         from pydub.generators import Sine
 
         #generate sine sound via using pydub
-        return Sine(440).to_audio_segment(duration=1000)
+        return Sine(440).to_audio_segment(duration=0)
 
         #assert False, "text_to_fake_audio not implemented"

@@ -3,7 +3,6 @@ import openai
 from pydub import AudioSegment
 
 from lib.logger import debug
-import lib.const as const
 from .BaseTTS import BaseTTS
 
 class OpenAITTS(BaseTTS):
@@ -32,9 +31,6 @@ class OpenAITTS(BaseTTS):
     def text_to_audio( self, text, format="wav" ):
         debug( type(self).__name__, "text_to_audio() :: Muutetaan vastaus puheeksi" )
 
-        if const.DO_FAKE_TTS:
-            return self._text_to_audio_fake( text )
-
         start_time = time()
 
         response = self.client.audio.speech.create(
@@ -58,6 +54,3 @@ class OpenAITTS(BaseTTS):
         sleep(1)
 
         return super()._text_to_audio_fake( text, **kwargs )
-
-
-tts = OpenAITTS()

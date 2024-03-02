@@ -2,7 +2,8 @@ from requests import post
 from os import getenv
 from time import sleep
 
-import lib.const as const
+import lib.llm.models as models
+
 from lib.logger import debug
 
 from .OpenAIGPT35LLM import OpenAIGPT35LLM
@@ -16,7 +17,7 @@ class GroqLLM(OpenAIGPT35LLM):
         super().__init__(*args, **kwargs)
 
         self.args["api_key"] = kwargs.get("api_key", getenv("GROQ_API_KEY"))
-        self.args["model"] = kwargs.get("model", "mixtral-8x7b-32768")
+        self.args["model"] = kwargs.get("model", models.GROQ_MIXTRAL_8_7B)
 
 
 
@@ -46,7 +47,4 @@ class GroqLLM(OpenAIGPT35LLM):
 
         completion = response.json()
 
-        print(completion)
         return completion
-
-llm = GroqLLM()

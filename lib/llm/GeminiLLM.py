@@ -2,8 +2,8 @@ from requests import post
 from os import getenv
 from time import sleep, time
 
-import lib.const as const
 from lib.logger import debug
+import lib.llm.models as models
 
 from .OpenAIGPT35LLM import OpenAIGPT35LLM
 from lib.llm.BaseLLM import BaseMessage, ROLE_SYSTEM, ROLE_USER, ROLE_ASSISTANT
@@ -16,7 +16,7 @@ class GeminiLLM(OpenAIGPT35LLM):
         self.roles_mapping[ ROLE_ASSISTANT ] = "model"
 
         self.args["api_key"] = kwargs.get("api_key", getenv("GOOGLE_API_KEY"))
-        self.args["model"]   = kwargs.get("model", "gemini-1.0-pro")
+        self.args["model"]   = kwargs.get("model", models.GEMINI_1_0_PRO )
 
         location   = kwargs.get("location",   getenv("GOOGLE_LOCATION"))
         project_id = kwargs.get("project_id", getenv("GOOGLE_PROJECT_ID"))
@@ -91,6 +91,3 @@ class GeminiLLM(OpenAIGPT35LLM):
         debug( type(self).__name__, "_run_chat_completion() :: Valmis! (", time() - start_time, "s)" )
 
         return response;
-
-
-llm = GeminiLLM()
