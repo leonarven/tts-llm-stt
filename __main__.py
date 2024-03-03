@@ -13,6 +13,8 @@ def main():
     tts = args.tts
     stt = args.stt
 
+    llm.max_tokens = 100
+
     llm.addSystemMessage("""Olet ystävä ja asukas Lampolan talossa. 
     Sinun tehtäväsi on olla keskustelukumppani kenelle tahansa, joka keskustelee kanssasi.
     Et ole avustaja etkä palvelu, vaan ystävä ja keskustelukumppani.

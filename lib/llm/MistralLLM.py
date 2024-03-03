@@ -22,6 +22,15 @@ class MistralLLM(OpenAIGPT35LLM):
         return self._chat_completion_messages( self._text_to_messages( text ))
     
     def _chat_completion_messages( self, messages ) -> BaseMessage:
+
+        json = {
+            "model": f"{ self.args['model'] }",
+            "messages": messages
+        }
+
+        if self.max_tokens:
+            json["max_tokens"] = self.max_tokens
+
         response = post(
             self.api_endpoint,
             headers = {
@@ -29,10 +38,7 @@ class MistralLLM(OpenAIGPT35LLM):
                 "Accept": "application/json",
                 "Authorization": f"Bearer { self.args['api_key'] }"
             },
-            json = {
-                "model": f"{ self.args['model'] }",
-                "messages": messages
-            }
+            json = json
         )
 
         completion = response.json()

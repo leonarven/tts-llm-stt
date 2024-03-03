@@ -20,10 +20,15 @@ class BaseLLM(SpeechUtil):
 
     api_endpoint = None
 
+    max_tokens = None
+
     def __init__(self, *args, **kwargs):
         self.roles_mapping[ ROLE_ASSISTANT ] = ROLE_ASSISTANT
         self.roles_mapping[ ROLE_USER ]      = ROLE_USER
         self.roles_mapping[ ROLE_SYSTEM ]    = ROLE_SYSTEM
+
+        if "max_tokens" in kwargs:
+            self.max_tokens = kwargs["max_tokens"]
 
 
     # Muunnetaan ohjelman sisäinen rooli mallin rooliksi
