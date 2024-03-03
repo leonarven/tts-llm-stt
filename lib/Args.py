@@ -34,21 +34,26 @@ class Args:
 
         parser = ArgumentParser()
 
-        parser.add_argument( '-a', '--stt', default='', type=str )
-        parser.add_argument( '-b', '--llm', default='', type=str )
-        parser.add_argument( '-c', '--tts', default='', type=str )
-        parser.add_argument( '-d', '--debug', action='store_true' )
+        parser.add_argument( '-a', '--stt',        type=str, default='' )
+        parser.add_argument( '-b', '--llm',        type=str, default='' )
+        parser.add_argument( '-c', '--tts',        type=str, default='' )
         parser.add_argument( '-n', '--iterations', type=int, default=2, help="Used when in debug mode. Number of iterations. When 0, run indefinitely.")
-        parser.add_argument( '-o', '--operator', type=str, default="SpeechChamberOperator", help="Used when in debug mode. SpeechOperator or SpeechChamberOperator", choices=["SpeechOperator", "SpeechChamberOperator"])
+        parser.add_argument( '-o', '--operator',   type=str, default="SpeechChamberOperator", help="Used when in debug mode. SpeechOperator or SpeechChamberOperator", choices=["SpeechOperator", "SpeechChamberOperator"])
+        parser.add_argument( '-d', '--debug',      action='store_true' )
+        parser.add_argument( '-v', '--verbose',    action='store_true' )
 
         args = parser.parse_args()
 
-        self.setDebug( args.debug )
-        self.setSTT(   args.stt )
-        self.setLLM(   args.llm )
-        self.setTTS(   args.tts )
+        if args.debug and not args.verbose:
+            args.verbose = True
+
+        self.setDebug(      args.debug      )
+        self.setVerbose(    args.verbose    )
+        self.setSTT(        args.stt        )
+        self.setLLM(        args.llm        )
+        self.setTTS(        args.tts        )
         self.setIterations( args.iterations )
-        self.setOperator( args.operator )
+        self.setOperator(   args.operator   )
 
         debug( "Args() :: DEBUG:", self.debug )
         debug( "Args() :: STT:",   self.stt   )
@@ -62,6 +67,13 @@ class Args:
             environ["DEBUG"] = str( self.debug )
         else:
             environ["DEBUG"] = '' # Clear DEBUG environment variable as '' is False
+
+    def setVerbose( self, verbose ):
+        self.verbose = True if verbose else False
+        if self.verbose:
+            environ["VERBOSE"] = str( self.verbose )
+        else:
+            environ["VERBOSE"] = ''
 
     def setSTT( self, stt ):
 

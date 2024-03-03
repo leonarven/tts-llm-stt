@@ -33,6 +33,7 @@ python3.10 . --debug --tts=fake
 
 **Parameters**
 - `-d` / `--debug` - Debug mode
+- `-v` / `--verbose` - Verbose mode
 - `-a` / `--stt` - Speech to text -model
 - `-b` / `--llm` - LLM-model
 - `-c` / `--tts` - Text to speech -model
