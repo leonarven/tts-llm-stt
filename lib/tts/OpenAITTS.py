@@ -22,7 +22,7 @@ class OpenAITTS(BaseTTS):
         self.client = openai.OpenAI();
     
     def _initiate_temporary_file( self ):
-        return "latest_speech.wav"
+        return ".tmp/latest_speech.wav"
     
     def _get_temporary_file( self ):
         return self.temporary_file;
