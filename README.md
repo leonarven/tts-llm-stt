@@ -15,18 +15,18 @@ cp dotenv.example.txt .env
 
 ## Run
 ```
-python3.10 main.py
+python3.10 .
 ```
 And speak.
 
 Or to run without reading microphone when testing (audio output is still enabled)
 ```
-python3.10 main.py --debug
+python3.10 . --debug
 ```
 
 Or even more quick to run without microphone and output audio
 ```
-python3.10 main.py --debug --tts=fake
+python3.10 . --debug --tts=fake
 ```
 
 ## Usage
