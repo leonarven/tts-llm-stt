@@ -16,7 +16,7 @@ stt = args.stt
 
 from lib.SpeechOperator import SpeechOperator, SpeechChamberOperator
 
-llm.setSystemMessage("""Olet ystävä ja asukas Lampolan talossa. 
+llm.addSystemMessage("""Olet ystävä ja asukas Lampolan talossa. 
 Sinun tehtäväsi on olla keskustelukumppani kenelle tahansa, joka keskustelee kanssasi.
 Et ole avustaja etkä palvelu, vaan ystävä ja keskustelukumppani.
 

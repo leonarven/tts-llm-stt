@@ -19,6 +19,7 @@ class GroqLLM(OpenAIGPT35LLM):
         self.args["api_key"] = kwargs.get("api_key", getenv("GROQ_API_KEY"))
         self.args["model"] = kwargs.get("model", models.GROQ_MIXTRAL_8_7B)
 
+        self.addSystemMessage("ÄLÄ KOSKAAN LIITÄ VIESTIN YHTEYTEEN SEN KÄÄNNÖSTÄ ENGLANNIKSI!")
 
 
     def _chat_completion_messages( self, messages ) -> BaseMessage:

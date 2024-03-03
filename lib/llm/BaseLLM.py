@@ -45,6 +45,22 @@ class BaseLLM(SpeechUtil):
     def printChat( self ):
         print( self.chatToString() )
 
+
+    def addSystemMessage( self, content: str ):
+        debug( type(self).__name__, "addSystemMessage", content )     
+
+        for message in self.message_history:
+            if message.role == ROLE_SYSTEM:
+
+                self.system_message = message.content + "\n\n" + content
+
+                message.content = self.system_message
+                return;
+
+        self.system_message = content
+
+        self.message_history.append( BaseMessage( content=content, role=ROLE_SYSTEM ))
+
     def setSystemMessage( self, message ):
         debug( type(self).__name__, "setSystemMessage", message )
 
