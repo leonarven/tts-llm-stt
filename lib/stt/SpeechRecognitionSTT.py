@@ -25,12 +25,12 @@ class SpeechRecognitionSTT( BaseSTT ):
                 self.recognizer.adjust_for_ambient_noise( source )
                 self.adjust_for_ambient_noise = False
 
-            return self._audio_source_to_text( source, duration=duration, recognizer=self.recognizer )
+            return self._audio_source_to_text( source, duration=duration )
 
     def _audio_source_to_text( self, source, **kwargs ):
         debug( type(self).__name__, "recording_to_text()","Kuunnellaan...")
 
-        r = kwargs.get("recognizer", sr.Recognizer())
+        r = kwargs.get( "recognizer", self.recognizer )
 
         # has kwarg duration
         if "duration" in kwargs and kwargs["duration"] is not None:

@@ -49,18 +49,21 @@ class SpeechOperator:
 
     def run(self):
 
+        # Noudetaan uusi viesti
         text = self.fetchMessage()
 
         if text == "": return
 
-        #play( self.tts.text_to_audio( text ))
-
+        # Esitetään miettiväistä ääntä
         Thread( target=lambda: run_thinking_sound( text )).start()
 
+        # Noudetaan vastaus kielimallista
         response = self.fetchResponse( text )
 
+        # Printataan keskustelu
         self.printChat();
 
+        # Toistetaan vastaus
         self.playbackText( response )
 
     def fetchMessage( self ):
@@ -85,6 +88,18 @@ class SpeechOperator:
         self.llm.printChat()
 
 class SpeechChamberOperator( SpeechOperator ):
+
+    def run(self):
+        text = self.fetchMessage()
+
+        if text == "": return
+
+        response = self.fetchResponse( text )
+
+        self.printChat();
+
+        self.playbackText( response )
+
 
     def fetchMessage( self ):
 

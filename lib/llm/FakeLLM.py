@@ -1,7 +1,6 @@
 from time import sleep
 from lib.logger import debug
-from lib.llm.BaseLLM import BaseLLM, BaseMessage, ROLE_USER
-from lib.Args import args
+from lib.llm.BaseLLM import BaseLLM, BaseMessage, ROLE_USER, ROLE_ASSISTANT
 
 class FakeLLM(BaseLLM):
     
@@ -18,6 +17,14 @@ class FakeLLM(BaseLLM):
         sleep(1)
 
         return super()._text_to_text_completion_fake( text )
+
+    def _chat_completion_messages( self, messages: list ) -> BaseMessage:
+
+        text = messages[ len(messages)-1 ]["content"]
+
+        return BaseMessage( content="Vastaus viestiin: "+text, role=ROLE_ASSISTANT )
+
+
 
     def _text_to_messages( self, text ):
 

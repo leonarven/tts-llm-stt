@@ -78,7 +78,7 @@ class BaseLLM(SpeechUtil):
         assert False, "text_to_text_completion not implemented"
 
 
-    def _text_to_text_completion_fake( self, text ):
+    def _text_to_text_completion_fake( self, text: str ) -> str:
 
         message = BaseMessage( content="Vastaus viestiin: "+text, role=ROLE_ASSISTANT )
 
