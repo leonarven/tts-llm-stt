@@ -1,5 +1,7 @@
 .rsync*
 *.log
+*.code-workspace
+.tmp/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
