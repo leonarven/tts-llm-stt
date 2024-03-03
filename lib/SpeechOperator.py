@@ -2,6 +2,13 @@ from pydub.playback import play
 
 from lib.llm.BaseLLM import ROLE_USER
 
+from threading import Thread
+from lib.tts.StaticPrerecordingsTTS import StaticPrerecordingsTTS
+st = StaticPrerecordingsTTS()
+
+def run_thinking_sound( text = "niin" ):
+    st.text_to_audio( text )
+
 class SpeechOperator:
 
     iteration = 0
@@ -47,6 +54,8 @@ class SpeechOperator:
         if text == "": return
 
         #play( self.tts.text_to_audio( text ))
+
+        Thread( target=lambda: run_thinking_sound( text )).start()
 
         response = self.fetchResponse( text )
 
