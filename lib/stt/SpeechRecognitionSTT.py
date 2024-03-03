@@ -5,6 +5,10 @@ from lib.stt.BaseSTT import BaseSTT
 
 class SpeechRecognitionSTT( BaseSTT ):
 
+    recognizer = sr.Recognizer()
+
+    adjust_for_ambient_noise = True
+
     def audio_to_text( self, filename ):
         debug( type(self).__name__, "audio_to_text()","Kuunnellaan tiedosto")
 
@@ -13,16 +17,15 @@ class SpeechRecognitionSTT( BaseSTT ):
     
     def recording_to_text( self, duration=None ):
         debug( type(self).__name__, "recording_to_text()","Kuunnellaan...")
-    
-        r = sr.Recognizer()
 
         with sr.Microphone() as source:
 
-            if duration is None:
+            if self.adjust_for_ambient_noise and duration is None:
                 debug( type(self).__name__, "recording_to_text()","Kuunnellaan taustaa...")
-                r.adjust_for_ambient_noise( source )
+                self.recognizer.adjust_for_ambient_noise( source )
+                self.adjust_for_ambient_noise = False
 
-            return self._audio_source_to_text( source, duration=duration, recognizer=r )
+            return self._audio_source_to_text( source, duration=duration, recognizer=self.recognizer )
 
     def _audio_source_to_text( self, source, **kwargs ):
         debug( type(self).__name__, "recording_to_text()","Kuunnellaan...")
