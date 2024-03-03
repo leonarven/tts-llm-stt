@@ -2,6 +2,8 @@ from pydub.playback import play
 
 from lib.llm.BaseLLM import ROLE_USER
 
+from lib.tts.FakeTTS import FakeTTS
+
 from threading import Thread
 from lib.tts.StaticPrerecordingsTTS import StaticPrerecordingsTTS
 st = StaticPrerecordingsTTS()
@@ -54,8 +56,9 @@ class SpeechOperator:
 
         if text == "": return
 
-        # Esitetään miettiväistä ääntä
-        Thread( target=lambda: run_thinking_sound( text )).start()
+        if not isinstance( self.tts, FakeTTS ):
+            # Esitetään miettiväistä ääntä, jos käytössä jokin OIKEA puheentuottaja
+            Thread( target=lambda: run_thinking_sound( text )).start()
 
         # Noudetaan vastaus kielimallista
         response = self.fetchResponse( text )
@@ -88,18 +91,6 @@ class SpeechOperator:
         self.llm.printChat()
 
 class SpeechChamberOperator( SpeechOperator ):
-
-    def run(self):
-        text = self.fetchMessage()
-
-        if text == "": return
-
-        response = self.fetchResponse( text )
-
-        self.printChat();
-
-        self.playbackText( response )
-
 
     def fetchMessage( self ):
 

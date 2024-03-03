@@ -10,7 +10,7 @@ from lib.llm.BaseLLM import BaseMessage, ROLE_SYSTEM, ROLE_USER, ROLE_ASSISTANT
 
 class MistralLLM(OpenAIGPT35LLM):
 
-    api_endpoint = "https://api.mistral.ai/v1/chat/completions",
+    api_endpoint = "https://api.mistral.ai/v1/chat/completions";
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -19,7 +19,9 @@ class MistralLLM(OpenAIGPT35LLM):
         self.args["model"] = kwargs.get("model", models.MISTRAL_LARGE_LATEST )
 
     def _chat_completion_single_message( self, text ) -> BaseMessage:
+        return self._chat_completion_messages( self._text_to_messages( text ))
     
+    def _chat_completion_messages( self, messages ) -> BaseMessage:
         response = post(
             self.api_endpoint,
             headers = {
@@ -29,7 +31,7 @@ class MistralLLM(OpenAIGPT35LLM):
             },
             json = {
                 "model": f"{ self.args['model'] }",
-                "messages": self._text_to_messages( text )
+                "messages": messages
             }
         )
 
