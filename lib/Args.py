@@ -15,6 +15,14 @@ from lib.stt.models import SPEECH_RECOGNITION as default_debug_stt
 from lib.llm.models import GROQ_MIXTRAL_8_7B  as default_debug_llm
 from lib.tts.models import GTTS               as default_debug_tts
 
+if "DEFAULT_STT" not in environ: environ["DEFAULT_STT"] = default_stt
+if "DEFAULT_LLM" not in environ: environ["DEFAULT_LLM"] = default_llm
+if "DEFAULT_TTS" not in environ: environ["DEFAULT_TTS"] = default_tts
+
+if "DEFAULT_DEBUG_STT" not in environ: environ["DEFAULT_DEBUG_STT"] = default_debug_stt
+if "DEFAULT_DEBUG_LLM" not in environ: environ["DEFAULT_DEBUG_LLM"] = default_debug_llm
+if "DEFAULT_DEBUG_TTS" not in environ: environ["DEFAULT_DEBUG_TTS"] = default_debug_tts
+
 class Args:
 
     debug = False
@@ -78,7 +86,8 @@ class Args:
     def setSTT( self, stt ):
 
         if not stt:
-            stt = default_debug_stt if self.debug else default_stt
+            stt = environ["DEFAULT_DEBUG_STT"] if self.debug else environ["DEFAULT_STT"]
+            #stt = default_debug_stt if self.debug else default_stt
 
         stt = stt.lower()
 
@@ -87,7 +96,8 @@ class Args:
     def setLLM( self, llm ):
         
         if not llm:
-            llm = default_debug_llm if self.debug else default_llm
+            llm  = environ["DEFAULT_DEBUG_LLM"] if self.debug else environ["DEFAULT_LLM"]
+            #llm = default_debug_llm if self.debug else default_llm
 
         llm = llm.lower()
 
@@ -97,7 +107,8 @@ class Args:
     def setTTS( self, tts ):
 
         if not tts:
-            tts = default_debug_tts if self.debug else default_tts
+            tts = environ["DEFAULT_DEBUG_TTS"] if self.debug else environ["DEFAULT_TTS"]
+            #tts = default_debug_tts if self.debug else default_tts
 
         tts = tts.lower()
 
