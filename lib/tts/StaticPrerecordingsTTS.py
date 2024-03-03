@@ -13,6 +13,11 @@ assets = [
 sounds = {};
 
 class StaticPrerecordingsTTS( BaseTTS ):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        [ self.resolveSound( assets_path + filename, opts ) for string, filename, opts in assets ]
     
     def text_to_audio( self, text, lang="fi" ):
         debug( type(self).__name__, "text_to_audio() :: Muutetaan vastaus puheeksi" )
@@ -56,13 +61,19 @@ class StaticPrerecordingsTTS( BaseTTS ):
         
         return string, filename, opts
 
-    def playSound( self, filepath, opts:dict ):
+    def resolveSound( self, filepath, opts:dict ):
         debug( type(self).__name__, "playSound()", filepath )
 
         if filepath not in sounds:
             sounds[ filepath ] = AudioSegment.from_file( filepath, codec=opts.get("codec", "wav") )
 
-        play( sounds[ filepath ] )
+        return sounds[ filepath ]
+
+
+    def playSound( self, filepath, opts:dict ):
+        debug( type(self).__name__, "playSound()", filepath )
+
+        play( self.resolveSound( filepath, opts ))
 
     def levenshtein_distance( self, a, b ):
         if not a: return len(b)
